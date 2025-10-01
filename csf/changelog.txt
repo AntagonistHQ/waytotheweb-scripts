@@ -1,5 +1,7 @@
 ChangeLog:
 
+15.02 - Revert to TESTING=1 in the default config
+
 15.01 - Update LFD faied login detection to be compatible with Dovecot 2.4
 
 	Update default csf configuration for DirectAdmin installations
