@@ -16,12 +16,13 @@
 	# You should have received a copy of the GNU General Public License along with
 	# this program; if not, see <https://www.gnu.org/licenses>.
 */
+#include <stdlib.h>
 #include <stdio.h>
 #include <sys/types.h>
 #include <unistd.h>
 #include <string.h>
 #include <pwd.h>
-main ()
+int main ()
 {
 	FILE *adminFile;
 	FILE *resellerFile;

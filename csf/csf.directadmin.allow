@@ -1,5 +1,6 @@
 ###############################################################################
 # Copyright (C) 2006-2025 Jonathan Michaelson
+# Copyright (C) 2025-2025 JBMC Software Inc.
 #
 # https://github.com/waytotheweb/scripts
 #
@@ -28,3 +29,6 @@
 # Note: IP addressess listed in this file will NOT be ignored by lfd, so they
 # can still be blocked. If you do not want lfd to block an IP address you must
 # add it to csf.ignore
+
+tcp|out|u=0 # Give root account full access
+udp|out|u=0 # Give root account full access

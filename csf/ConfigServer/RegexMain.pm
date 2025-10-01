@@ -1,5 +1,6 @@
 ###############################################################################
 # Copyright (C) 2006-2025 Jonathan Michaelson
+# Copyright (C) 2025-2025 JBMC Software Inc.
 #
 # https://github.com/waytotheweb/scripts
 #
@@ -205,28 +206,28 @@ sub processline {
 	}
 
 #dovecot
-	if (($config{LF_POP3D}) and ($globlogs{POP3D_LOG}{$lgfile}) and ($line =~ /^(\S+|\S+\s+\d+\s+\S+) \S+ dovecot(\[\d+\])?: pop3-login: (Disconnected: )?(Aborted login( by logging out)?|Connection closed|Disconnected|Disconnected: Inactivity)(:\s*\S+\sfailed: Connection reset by peer)?(\s*\(auth failed, \d+ attempts( in \d+ secs)?\))?: (user=(<\S*>)?, )?(method=\S+, )?rip=(\S+), lip=/)) {
+	if (($config{LF_POP3D}) and ($globlogs{POP3D_LOG}{$lgfile}) and ($line =~ /^(\S+|\S+\s+\d+\s+\S+) \S+ dovecot(\[\d+\])?: pop3-login: (?:Login aborted:\s*)?(Disconnected: )?(Aborted login( by logging out)?|Connection closed|Disconnected|Disconnected: Inactivity)(:\s*\S+\sfailed: Connection reset by peer)?(\s*\(auth failed, \d+ attempts( in \d+ secs)?\))?\s*(?:\(auth_failed\))?: (user=(<\S*>)?, )?(method=\S+, )?rip=(\S+), lip=/)) {
         my $ip = $12;
 		my $acc = $10;
 		$ip =~ s/^::ffff://;
 		$acc =~ s/^<|>$//g;
 		if (checkip(\$ip)) {return ("Failed POP3 login from","$ip|$acc","pop3d")} else {return}
 	}
-		if (($config{LF_IMAPD}) and ($globlogs{IMAPD_LOG}{$lgfile}) and ($line =~ /^(\S+|\S+\s+\d+\s+\S+) \S+ dovecot(\[\d+\])?: imap-login: (Disconnected: )?(Aborted login( by logging out)?|Connection closed|Disconnected|Disconnected: Inactivity)(:\s*\S+\sfailed: Connection reset by peer)?(\s*\(auth failed, \d+ attempts( in \d+ secs)?\))?: (user=(<\S*>)?, )?(method=\S+, )?rip=(\S+), lip=/)) {
+		if (($config{LF_IMAPD}) and ($globlogs{IMAPD_LOG}{$lgfile}) and ($line =~ /^(\S+|\S+\s+\d+\s+\S+) \S+ dovecot(\[\d+\])?: imap-login: (?:Login aborted:\s*)?(Disconnected: )?(Aborted login( by logging out)?|Connection closed|Disconnected|Disconnected: Inactivity)(:\s*\S+\sfailed: Connection reset by peer)?(\s*\(auth failed, \d+ attempts( in \d+ secs)?\))?\s*(?:\(auth_failed\))?: (user=(<\S*>)?, )?(method=\S+, )?rip=(\S+), lip=/)) {
         my $ip = $12;
 		my $acc = $10;
 		$ip =~ s/^::ffff://;
 		$acc =~ s/^<|>$//g;
 		if (checkip(\$ip)) {return ("Failed IMAP login from","$ip|$acc","imapd")} else {return}
 	}
-	if (($config{LF_POP3D}) and ($globlogs{POP3D_LOG}{$lgfile}) and ($line =~ /^(\S+|\S+\s+\d+\s+\S+) pop3-login(\[\d+\])?: Info: (Aborted login( by logging out)?|Connection closed|Disconnected|Disconnected: Inactivity)(\s*\(auth failed, \d+ attempts( in \d+ secs)?\))?: (user=(<\S*>)?, )?(method=\S+, )?rip=(\S+), lip=/)) {
+	if (($config{LF_POP3D}) and ($globlogs{POP3D_LOG}{$lgfile}) and ($line =~ /^(\S+|\S+\s+\d+\s+\S+) pop3-login(\[\d+\])?: Info: (?:Login aborted:\s*)?(Aborted login( by logging out)?|Connection closed|Disconnected|Disconnected: Inactivity)(\s*\(auth failed, \d+ attempts( in \d+ secs)?\))?\s*(?:\(auth_failed\))?: (user=(<\S*>)?, )?(method=\S+, )?rip=(\S+), lip=/)) {
         my $ip = $10;
 		my $acc = $8;
 		$ip =~ s/^::ffff://;
 		$acc =~ s/^<|>$//g;
 		if (checkip(\$ip)) {return ("Failed POP3 login from","$ip|$acc","pop3d")} else {return}
 	}
-	if (($config{LF_IMAPD}) and ($globlogs{IMAPD_LOG}{$lgfile}) and ($line =~ /^(\S+|\S+\s+\d+\s+\S+) imap-login(\[\d+\])?: Info: (Aborted login( by logging out)?|Connection closed|Disconnected|Disconnected: Inactivity)(\s*\(auth failed, \d+ attempts( in \d+ secs)?\))?: (user=(<\S*>)?, )?(method=\S+, )?rip=(\S+), lip=/)) {
+	if (($config{LF_IMAPD}) and ($globlogs{IMAPD_LOG}{$lgfile}) and ($line =~ /^(\S+|\S+\s+\d+\s+\S+) imap-login(\[\d+\])?: Info: (?:Login aborted:\s*)?(Aborted login( by logging out)?|Connection closed|Disconnected|Disconnected: Inactivity)(\s*\(auth failed, \d+ attempts( in \d+ secs)?\))?\s*(?:\(auth_failed\))?: (user=(<\S*>)?, )?(method=\S+, )?rip=(\S+), lip=/)) {
         my $ip = $10;
 		my $acc = $8;
 		$ip =~ s/^::ffff://;
