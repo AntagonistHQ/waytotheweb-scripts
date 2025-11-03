@@ -87,6 +87,7 @@ exe:/usr/sbin/mariadbd
 exe:/usr/bin/dbus-broker-launch
 exe:/usr/bin/dbus-broker
 
+exe:/usr/bin/bwrap
 exe:/usr/bin/freshclam
 exe:/usr/bin/clamd
 exe:/usr/sbin/clamd

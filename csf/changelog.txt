@@ -1,5 +1,11 @@
 ChangeLog:
 
+15.03 - Removed surplus iframe for CSF plugin in directAdmin Evolution skin
+
+	Added `/usr/bin/bwrap` to the `csf.directadmin.pignore` file
+
+	Updated `csf.directadmin.conf` to use LF_INTEGRITY=0 and PT_LIMIT=0
+
 15.02 - Revert to TESTING=1 in the default config
 
 15.01 - Update LFD faied login detection to be compatible with Dovecot 2.4
