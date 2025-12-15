@@ -1,5 +1,7 @@
 ChangeLog:
 
+15.05 - Updated ssh log parsing patterns to support OpenSSH 9.8 and newer
+
 15.04 - Removed set-uid binary wrapper from DirectAdmin plugin
 
 15.03 - Removed surplus iframe for CSF plugin in directAdmin Evolution skin
