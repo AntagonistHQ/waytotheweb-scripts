@@ -422,6 +422,13 @@ chmod 700 /etc/cron.daily/csget
 chmod -v 700 auto.directadmin.pl
 ./auto.directadmin.pl $OLDVERSION
 
+
+# Cleanup obsolete plugin files
+rm -f \
+	/usr/local/directadmin/plugins/csf/exec/csf \
+	/usr/local/directadmin/plugins/csf/hooks/reseller_img.html \
+	/usr/local/directadmin/plugins/csf/hooks/admin_img.html
+
 mkdir -p /usr/local/directadmin/plugins/csf/
 chmod 711 /usr/local/directadmin/plugins/csf
 chown diradmin:diradmin /usr/local/directadmin/plugins/csf
@@ -429,22 +436,14 @@ cp -avf da/* /usr/local/directadmin/plugins/csf/
 cp -avf csf/* /usr/local/directadmin/plugins/csf/images/
 find /usr/local/directadmin/plugins/csf/ -type d -exec chmod -v 755 {} \;
 find /usr/local/directadmin/plugins/csf/ -type f -exec chmod -v 644 {} \;
-
-if [ -e "/usr/local/directadmin/plugins/csf/exec/csf" ]; then
-	rm -f /usr/local/directadmin/plugins/csf/exec/csf
-fi
-export PATH=$PATH;
-gcc -o /usr/local/directadmin/plugins/csf/exec/csf csf.c
 chown -Rv diradmin:diradmin /usr/local/directadmin/plugins/csf
 chmod -v 755 /usr/local/directadmin/plugins/csf/admin/index.html
 chmod -v 755 /usr/local/directadmin/plugins/csf/admin/index.raw
-chmod -v 755 /usr/local/directadmin/plugins/csf/exec/da_csf.cgi
 chmod -v 755 /usr/local/directadmin/plugins/csf/reseller/index.html
 chmod -v 755 /usr/local/directadmin/plugins/csf/reseller/index.raw
+chmod -v 755 /usr/local/directadmin/plugins/csf/exec/da_csf.cgi
 chmod -v 755 /usr/local/directadmin/plugins/csf/exec/da_csf_reseller.cgi
 chmod -v 755 /usr/local/directadmin/plugins/csf/scripts/*
-chown -v root:root /usr/local/directadmin/plugins/csf/exec/csf
-chmod -v 4755 /usr/local/directadmin/plugins/csf/exec/csf
 
 if test `cat /proc/1/comm` = "systemd"
 then

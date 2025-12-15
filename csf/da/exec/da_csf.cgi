@@ -38,32 +38,6 @@ my %config = $config->config;
 my $slurpreg = ConfigServer::Slurp->slurpreg;
 my $cleanreg = ConfigServer::Slurp->cleanreg;
 
-our %session;
-our @sessiondata;
-unless (-e "/var/lib/csf/csf.da.skip") {
-	if ($ENV{SESSION_ID} =~ /^\w+$/) {
-		open (my $SESSION, "<", "/usr/local/directadmin/data/sessions/da_sess_".$ENV{SESSION_ID}) or &loginfail("Security Error: No valid session ID for [$ENV{SESSION_ID}]");
-		flock ($SESSION, LOCK_SH);
-		@sessiondata = <$SESSION>;
-		close ($SESSION);
-		chomp @sessiondata;
-		foreach my $line (@sessiondata) {
-			my ($name, $value) = split(/\=/,$line);
-			$session{$name} = $value;
-		}
-	}
-	if (($session{key} eq "") or ($session{ip} eq "") or ($session{key} ne $ENV{SESSION_KEY})) {
-		&loginfail("Security Error: No valid session key");
-		exit;
-	}
-
-	my ($ppid, $pexe) = &getexe(getppid());
-	if ($pexe ne "/usr/local/directadmin/directadmin") {
-		&loginfail("Security Error: Invalid parent");
-		exit;
-	}
-}
-
 open (my $IN, "<", "/etc/csf/version.txt") or die $!;
 $myv = <$IN>;
 close ($IN);
@@ -288,34 +262,5 @@ sub getexe {
 	my $ppid = $1;
 	my $exe = readlink("/proc/".$ppid."/exe");
 	return ($ppid, $exe);
-}
-sub loginfail {
-	my $message = shift;
-	my $file = "/var/lib/csf/da".time.".error";
-	print $message."<p>Information saved to [$file]\n";
-	sysopen (my $FILE, $file, O_WRONLY | O_CREAT | O_TRUNC);
-	flock ($FILE, LOCK_EX);
-	print $FILE "To disable DirectAdmin session checks, create a touch file called /var/lib/csf/csf.da.skip\n\n";
-	print $FILE $message."\n\n";
-	print $FILE "Session ID = [$ENV{SESSION_ID}]\n";
-	print $FILE "Session File [/usr/local/directadmin/data/sessions/da_sess_".$ENV{SESSION_ID}."]...";
-	if (-e "/usr/local/directadmin/data/sessions/da_sess_".$ENV{SESSION_ID}) {
-		print $FILE "exists.\n\n";
-	} else {
-		print $FILE "does not exist\n\n";
-		close ($FILE);
-		exit;
-	}
-	print $FILE "Environment data:\n";
-	print $FILE "REMOTE_ADDR = [$ENV{REMOTE_ADDR}]\n";
-	print $FILE "SESSION_KEY = [$ENV{SESSION_KEY}]\n";
-	print $FILE "SESSION_ID = [$ENV{SESSION_ID}]\n\n";
-	print $FILE "Session data:\n";
-	print $FILE "ip = [$session{ip}]\n";
-	print $FILE "key = [$session{key}]\n\n";
-	print $FILE "Session file contents:\n";
-	print $FILE join("\n",@sessiondata);
-	close ($FILE);
-	exit;
 }
 1;

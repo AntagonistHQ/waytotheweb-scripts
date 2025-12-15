@@ -89,7 +89,7 @@ if (($session{key} ne "" and ($ENV{SESSION_KEY} eq $session{key})) and
 }
 
 $reseller = 0;
-if ($ENV{REMOTE_USER} ne "" and $ENV{REMOTE_USER} eq $ENV{CSF_RESELLER} and $rprivs{$ENV{REMOTE_USER}}{USE}) {
+if ($ENV{REMOTE_USER} ne "" and $rprivs{$ENV{REMOTE_USER}}{USE}) {
 	$reseller = 1;
 } else {
 	print "You do not have access to this feature\n";

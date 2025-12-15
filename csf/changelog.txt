@@ -1,5 +1,7 @@
 ChangeLog:
 
+15.04 - Removed set-uid binary wrapper from DirectAdmin plugin
+
 15.03 - Removed surplus iframe for CSF plugin in directAdmin Evolution skin
 
 	Added `/usr/bin/bwrap` to the `csf.directadmin.pignore` file
