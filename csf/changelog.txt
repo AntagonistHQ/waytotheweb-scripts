@@ -1,4 +1,5 @@
 ChangeLog:
+15.07 - Fixed dovecot pattern group possitions
 
 15.06 - Updated dovecot failed login patterns
 
